@@ -1,0 +1,99 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Avaliação (comidas, jogos, Etc)",
+        "description": "Essa API tem como objetivo, permitir que usuarios, avaliem suas experiencias em jogos, restaurantes, etc",
+        "contact": {
+            "email": "anderson.backdev@gmail.com"
+        }
+    },
+    "version": "1.0.0",
+    "servers": [
+        {
+            "url": "http://localhost:6567",
+            "description": "api de testes"
+        }
+    ],
+
+    "paths": {
+        "/users": {
+            "post": {
+                "summary": "Cadastro de usuario",
+                "description": "essa rota ira cria um usuario e seu token de autenticação",
+                "tags": ["User"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "User": {
+                                    "value": {
+                                        "name": "Jhon",
+                                        "nickname": "Jhon Cena",
+                                        "email": "jhonCena@gmail.com",
+                                        "password": "ultraSecretPassword",
+                                        "born": "23/04/1977"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "token not provided"
+                    },
+                    "400": {
+                        "description": "Email already exists"
+                    },
+                    "201": {
+                        "description": "OK",
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "itens": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "nickname": {
+                        "type": "string"
+                    },
+                    "born": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+
+}
